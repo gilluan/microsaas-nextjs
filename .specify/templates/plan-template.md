@@ -34,15 +34,17 @@
 [Extract from feature spec: primary requirement + technical approach from research]
 
 ## Technical Context
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: [e.g., TypeScript 5.x, Node.js 18+ or NEEDS CLARIFICATION]
+**Primary Dependencies**: [e.g., Next.js 14, AWS Amplify Gen 2, ShadcnUI or NEEDS CLARIFICATION]
+**Storage**: [e.g., Amazon S3 via Amplify Gen 2, file uploads, CDN integration or N/A]
+**Functions**: [e.g., Lambda functions via Amplify Gen 2, custom business logic, triggers or N/A]
+**Backend Configuration**: [e.g., Amplify backend.ts, GraphQL schema, authentication setup or NEEDS CLARIFICATION]
+**Testing**: [e.g., Jest, React Testing Library, API integration tests or NEEDS CLARIFICATION]
+**Target Platform**: [e.g., Web application, mobile-responsive, Progressive Web App or NEEDS CLARIFICATION]
+**Project Type**: [single/web/mobile - determines source structure]
+**Performance Goals**: [domain-specific, e.g., Core Web Vitals, 200ms API response, bundle size <1MB or NEEDS CLARIFICATION]
+**Constraints**: [domain-specific, e.g., AWS free tier, multi-tenant isolation, GDPR compliance or NEEDS CLARIFICATION]
+**Scale/Scope**: [domain-specific, e.g., 10k users, real-time subscriptions, file storage capacity or NEEDS CLARIFICATION]
 
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
@@ -194,8 +196,10 @@ directories captured above]
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| [e.g., Custom backend outside Amplify] | [specific capability not available] | [why Amplify Gen 2 features insufficient] |
+| [e.g., Additional storage service] | [requirement beyond S3] | [why Amplify storage patterns inadequate] |
+| [e.g., Complex function orchestration] | [business logic needs] | [why simple Lambda functions insufficient] |
+| [e.g., Non-GraphQL API] | [legacy system integration] | [why GraphQL transformation not feasible] |
 
 
 ## Progress Tracking
@@ -216,4 +220,4 @@ directories captured above]
 - [ ] Complexity deviations documented
 
 ---
-*Based on Constitution v2.1.1 - See `/memory/constitution.md`*
+*Based on Constitution v1.1.0 - See `.specify/memory/constitution.md`*

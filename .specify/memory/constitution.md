@@ -1,50 +1,167 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+Version change: 1.0.0 → 1.1.0
+Modified principles: Enhanced AWS Amplify Gen 2 coverage
+Added sections: Enhanced backend configuration, storage, functions, environment management, observability
+Removed sections: N/A
+Templates requiring updates:
+  ⚠️ .specify/templates/plan-template.md - may need storage/functions complexity categories
+  ⚠️ .specify/templates/spec-template.md - may need storage/functions requirement sections
+  ⚠️ .specify/templates/tasks-template.md - may need backend configuration task categories
+  ✅ .claude/commands/*.md - verified agent-specific references
+Follow-up TODOs: Review templates for alignment with enhanced Amplify Gen 2 requirements
+-->
+
+# MicroSaaS Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. AWS Amplify Gen 2 First
+Every backend feature MUST leverage AWS Amplify Gen 2 capabilities. Use Amplify's TypeScript-first approach for backend configuration in `amplify/backend.ts` with proper resource definitions. Follow CLAUDE.md Amplify rules precisely - external providers naming conventions, proper authentication configuration, and GraphQL schema patterns. Implement proper resource relationships, authorization rules, and environment-specific configurations. Custom backends only when Amplify capabilities are insufficient.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Component Library Consistency
+All UI components MUST use ShadcnUI as the foundation. Customize existing ShadcnUI components rather than creating from scratch. Follow the established component patterns in `components/ui/` and maintain visual consistency across the application. Use the `cn()` utility for conditional styling.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Type Safety Throughout
+TypeScript MUST be used everywhere with strict configuration. All data MUST be validated using Zod schemas at boundaries (forms, API responses, store updates). No `any` types - use proper typing or `unknown`. Combine Zod with Zustand for type-safe state management.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Modern Web Standards
+Use Next.js App Router for all routing and navigation. Implement proper loading states, error boundaries, and SEO optimization. Follow React best practices with functional components, hooks, and proper performance optimization using React.memo, useMemo, and useCallback when needed.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Secure Payment Integration
+Stripe integration MUST use embedded forms and follow security best practices. Never handle sensitive payment data directly. Use Stripe's TypeScript SDK with proper error handling and webhook validation. Follow the direct property access patterns specified in CLAUDE.md for Stripe objects.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technical Stack Requirements
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Backend Configuration
+- Use `amplify/backend.ts` as single source of truth for backend resources
+- Configure data, auth, storage, and functions in TypeScript with proper typing
+- Implement environment-specific configurations (dev, staging, prod)
+- Use proper resource naming conventions and tagging strategies
+- Define IAM policies using least privilege principle
+- Configure monitoring and logging for all resources
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### Authentication & Authorization
+- Use AWS Cognito through Amplify Gen 2 for user management
+- Support email/password authentication and Google OAuth
+- Implement proper session management and protected routes
+- Follow Amplify authentication patterns and external provider configuration
+- Configure custom attributes and user groups for multi-tenancy
+- Implement MFA and account recovery workflows
+- Use proper token refresh and session management patterns
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### Data Layer
+- Use GraphQL schemas generated by Amplify Gen 2
+- Define relationships using belongsTo/hasMany patterns with proper foreign keys
+- Implement proper authorization rules (owner, groups, private, public permissions)
+- Use TypeScript client generation for type-safe API calls
+- Design schemas for multi-tenant SaaS patterns with proper data isolation
+- Implement proper indexing strategies for query performance
+- Use real-time subscriptions for live data updates
+- Follow GraphQL best practices: proper field naming, nullable vs non-nullable fields
+- Implement pagination, filtering, and sorting consistently across queries
+
+### Storage & File Management
+- Use Amplify Gen 2 storage with Amazon S3 for file operations
+- Implement proper access controls and file organization strategies
+- Support file upload/download with progress tracking and error handling
+- Use pre-signed URLs for secure direct uploads
+- Implement file type validation and size limits
+- Configure CDN integration for optimal file delivery
+- Follow multi-tenant file isolation patterns
+
+### Functions & Custom Logic
+- Use Amplify Gen 2 functions for custom business logic
+- Implement TypeScript-based Lambda functions with proper typing
+- Use function triggers for data processing and automation
+- Follow proper error handling and logging patterns
+- Implement proper environment variable management
+- Use Amplify function bundling and deployment optimizations
+- Configure appropriate timeout and memory settings
+
+### State Management
+- Zustand for global application state
+- Combine with Zod schemas for runtime validation
+- Create domain-specific stores (auth, user, app state)
+- Use selectors to prevent unnecessary re-renders
+
+### Payment Processing
+- Stripe embedded checkout forms
+- Webhook validation and processing
+- Proper error handling and user feedback
+- Secure handling of payment events and subscription management
+
+## Development Standards
+
+### Code Organization
+- Follow the directory structure specified in CLAUDE.md
+- Use absolute imports with `@/` prefix
+- Group imports: external libraries, internal components, relative imports
+- Implement proper separation of concerns (components, services, stores)
+
+### Testing Strategy
+- Unit tests for utility functions and hooks
+- Component tests using React Testing Library
+- API integration tests with mocked Amplify services
+- Validate Zod schemas independently
+
+### Performance Requirements
+- Implement code splitting with React.lazy
+- Optimize bundle size and loading times
+- Use proper caching strategies
+- Monitor Core Web Vitals and maintain good performance scores
+
+### Security Practices
+- Validate all user inputs with Zod
+- Use Amplify's built-in security features
+- Implement proper CSRF protection
+- Sanitize data before rendering
+- Never expose sensitive configuration or API keys
+- Follow AWS security best practices for IAM and resource access
+- Implement proper data encryption at rest and in transit
+- Use environment variables for sensitive configuration
+- Follow OWASP security guidelines for web applications
+- Implement proper rate limiting and DDoS protection
+
+### Deployment & Environment Management
+- Use Amplify hosting for frontend deployment with proper CI/CD
+- Configure multiple environments (development, staging, production)
+- Implement proper environment variable management and secrets handling
+- Use Amplify's branch-based deployments for feature development
+- Configure proper domain management and SSL certificates
+- Implement proper backup and disaster recovery strategies
+- Use infrastructure as code principles with Amplify Gen 2 configuration
+
+### Observability & Monitoring
+- Implement comprehensive logging using AWS CloudWatch
+- Configure proper error tracking and alerting
+- Use AWS X-Ray for distributed tracing
+- Monitor application performance and user experience
+- Set up proper health checks and monitoring dashboards
+- Implement proper audit logging for compliance requirements
+- Track key business metrics and user engagement
+- Configure proper log retention and cost optimization
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### Constitutional Compliance
+All code changes MUST comply with these principles. Pull requests violating constitutional principles require explicit justification and approval. Use the complexity tracking table in plan templates to document any necessary deviations.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+### Technology Decisions
+Changes to core technologies (Amplify Gen 2, Next.js, ShadcnUI, Zustand, Zod, Stripe) require constitutional amendment. New dependencies MUST align with existing stack choices and not introduce conflicting patterns. All AWS service integrations must go through Amplify Gen 2 when possible to maintain consistency and leverage built-in optimizations.
+
+### Development Workflow
+- Follow TDD principles: tests written first, then implementation
+- Use the /plan → /tasks → implementation workflow
+- Maintain the agent-specific guidance in CLAUDE.md
+- Regular constitution compliance reviews during code reviews
+
+### Amendment Process
+Constitution amendments require:
+1. Documented rationale for changes
+2. Impact assessment on existing codebase
+3. Migration plan for affected components
+4. Version increment following semantic versioning
+5. Update of dependent template files and documentation
+
+**Version**: 1.1.0 | **Ratified**: 2025-01-25 | **Last Amended**: 2025-09-25

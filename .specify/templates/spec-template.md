@@ -43,12 +43,16 @@ When creating this spec from a user prompt:
 2. **Don't guess**: If the prompt doesn't specify something (e.g., "login system" without auth method), mark it
 3. **Think like a tester**: Every vague requirement should fail the "testable and unambiguous" checklist item
 4. **Common underspecified areas**:
-   - User types and permissions
-   - Data retention/deletion policies  
-   - Performance targets and scale
-   - Error handling behaviors
-   - Integration requirements
-   - Security/compliance needs
+   - User types and permissions (Cognito user groups, authorization rules)
+   - Data retention/deletion policies (S3 lifecycle, data archiving)
+   - Performance targets and scale (concurrent users, API rate limits)
+   - Error handling behaviors (retry logic, fallback strategies)
+   - Integration requirements (external APIs, webhook handling)
+   - Security/compliance needs (data encryption, audit logging)
+   - Storage requirements (file types, size limits, access patterns)
+   - Functions/automation needs (triggers, scheduled tasks, background processing)
+   - Real-time requirements (subscriptions, live updates, notifications)
+   - Multi-tenancy patterns (data isolation, resource sharing)
 
 ---
 
@@ -67,9 +71,21 @@ When creating this spec from a user prompt:
 
 ## Requirements *(mandatory)*
 
+### Authentication & Authorization Requirements *(include if feature involves user management)*
+- **AUTH-001**: System MUST support [authentication method, e.g., "email/password and Google OAuth"]
+- **AUTH-002**: System MUST implement [user roles/groups, e.g., "admin, user, viewer roles"]
+- **AUTH-003**: System MUST enforce [access controls, e.g., "tenant data isolation"]
+- **AUTH-004**: System MUST provide [session management, e.g., "secure token refresh"]
+
+### Data & API Requirements *(include if feature involves data operations)*
+- **DATA-001**: System MUST [data operation, e.g., "support real-time updates via subscriptions"]
+- **DATA-002**: System MUST [data validation, e.g., "validate all inputs using Zod schemas"]
+- **DATA-003**: System MUST [data relationships, e.g., "maintain referential integrity"]
+- **DATA-004**: System MUST [performance requirement, e.g., "respond to queries within 200ms"]
+
 ### Functional Requirements
 - **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
+- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]
 - **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
@@ -77,10 +93,30 @@ When creating this spec from a user prompt:
 *Example of marking unclear requirements:*
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-008**: System MUST process files [NEEDS CLARIFICATION: processing requirements not specified - resize, convert, validate?]
+- **FR-009**: System MUST trigger notifications [NEEDS CLARIFICATION: trigger conditions and delivery method not specified]
+
+### Storage Requirements *(include if feature involves files)*
+- **File Types**: [What types of files, e.g., images, documents, videos]
+- **Size Limits**: [Maximum file sizes, total storage per user/tenant]
+- **Access Patterns**: [Who can access what files, sharing requirements]
+- **Processing Needs**: [Image resizing, document conversion, virus scanning]
+
+### Functions Requirements *(include if feature needs automation)*
+- **Triggers**: [What events should trigger automation, e.g., user signup, file upload]
+- **Scheduled Tasks**: [Regular processing needs, e.g., daily reports, cleanup]
+- **Background Processing**: [Async operations, batch jobs, data transformations]
+- **External Integrations**: [Third-party API calls, webhook processing]
+
+### Real-time Requirements *(include if feature needs live updates)*
+- **Subscription Patterns**: [What data changes need real-time updates]
+- **User Experience**: [How users should see live changes, notification preferences]
+- **Scale Considerations**: [Expected concurrent users, update frequency]
 
 ### Key Entities *(include if feature involves data)*
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
+- **Multi-tenancy**: [How data isolation works, tenant boundaries]
 
 ---
 
