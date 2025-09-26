@@ -1,0 +1,69 @@
+# User Activity Queries and Subscriptions
+# Contract for activity feed and real-time updates
+
+# Get user's activity feed
+query GetUserActivities($limit: Int = 10, $nextToken: String) {
+  listUserActivities(limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      activityType
+      description
+      metadata
+      createdAt
+    }
+    nextToken
+  }
+}
+
+# Create new activity (internal use by functions)
+mutation CreateUserActivity($input: CreateUserActivityInput!) {
+  createUserActivity(input: $input) {
+    id
+    activityType
+    description
+    metadata
+    createdAt
+  }
+}
+
+# Real-time subscription for activity updates
+subscription OnUserActivityCreated($userId: ID!) {
+  onCreateUserActivity(filter: { userId: { eq: $userId } }) {
+    id
+    activityType
+    description
+    metadata
+    createdAt
+  }
+}
+
+# Input Types
+input CreateUserActivityInput {
+  activityType: ActivityType!
+  description: String!
+  metadata: AWSJSON
+}
+
+# Enum Types
+enum ActivityType {
+  LOGIN
+  PROFILE_UPDATE
+  AVATAR_UPLOAD
+  PASSWORD_CHANGE
+  EMAIL_VERIFICATION
+}
+
+# Response Types
+type UserActivity {
+  id: ID!
+  userId: ID!
+  activityType: ActivityType!
+  description: String!
+  metadata: AWSJSON
+  createdAt: AWSDateTime!
+}
+
+type UserActivityConnection {
+  items: [UserActivity]
+  nextToken: String
+}

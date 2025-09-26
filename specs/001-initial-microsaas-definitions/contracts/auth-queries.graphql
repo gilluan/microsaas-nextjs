@@ -1,0 +1,107 @@
+# Authentication Queries and Mutations
+# Contract for user authentication operations
+
+# Get current authenticated user info
+query GetCurrentUser {
+  getCurrentUser {
+    id
+    email
+    name
+    avatar
+    emailVerified
+    lastLoginAt
+  }
+}
+
+# Register new user (creates Cognito user)
+mutation RegisterUser($input: RegisterUserInput!) {
+  registerUser(input: $input) {
+    userId
+    email
+    emailVerificationRequired
+  }
+}
+
+# Verify email address
+mutation VerifyEmail($input: VerifyEmailInput!) {
+  verifyEmail(input: $input) {
+    success
+    message
+  }
+}
+
+# Resend email verification
+mutation ResendEmailVerification($email: AWSEmail!) {
+  resendEmailVerification(email: $email) {
+    success
+    message
+  }
+}
+
+# Request password reset
+mutation RequestPasswordReset($email: AWSEmail!) {
+  requestPasswordReset(email: $email) {
+    success
+    message
+  }
+}
+
+# Confirm password reset
+mutation ConfirmPasswordReset($input: ConfirmPasswordResetInput!) {
+  confirmPasswordReset(input: $input) {
+    success
+    message
+  }
+}
+
+# Change password (authenticated user)
+mutation ChangePassword($input: ChangePasswordInput!) {
+  changePassword(input: $input) {
+    success
+    message
+  }
+}
+
+# Input Types
+input RegisterUserInput {
+  email: AWSEmail!
+  password: String!
+  name: String!
+}
+
+input VerifyEmailInput {
+  email: AWSEmail!
+  verificationCode: String!
+}
+
+input ConfirmPasswordResetInput {
+  email: AWSEmail!
+  confirmationCode: String!
+  newPassword: String!
+}
+
+input ChangePasswordInput {
+  currentPassword: String!
+  newPassword: String!
+}
+
+# Response Types
+type AuthResponse {
+  userId: ID
+  email: AWSEmail
+  emailVerificationRequired: Boolean
+}
+
+type AuthResult {
+  success: Boolean!
+  message: String
+}
+
+type CurrentUser {
+  id: ID!
+  email: AWSEmail!
+  name: String!
+  avatar: String
+  emailVerified: Boolean!
+  lastLoginAt: AWSDateTime
+}

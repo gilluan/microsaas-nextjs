@@ -1,0 +1,69 @@
+# User Profile Queries and Mutations
+# Contract for user profile management operations
+
+# Get current user's profile
+query GetUserProfile {
+  getUser {
+    id
+    email
+    name
+    avatar
+    emailVerified
+    createdAt
+    updatedAt
+    lastLoginAt
+  }
+}
+
+# Update user profile
+mutation UpdateUserProfile($input: UpdateUserProfileInput!) {
+  updateUserProfile(input: $input) {
+    id
+    name
+    email
+    avatar
+    updatedAt
+  }
+}
+
+# Upload avatar - get pre-signed URL
+mutation GetAvatarUploadUrl($contentType: String!, $fileName: String!) {
+  getAvatarUploadUrl(contentType: $contentType, fileName: $fileName) {
+    uploadUrl
+    downloadUrl
+    expiresIn
+  }
+}
+
+# Confirm avatar upload and update profile
+mutation ConfirmAvatarUpload($s3Key: String!) {
+  confirmAvatarUpload(s3Key: $s3Key) {
+    id
+    avatar
+    updatedAt
+  }
+}
+
+# Input Types
+input UpdateUserProfileInput {
+  name: String
+  email: AWSEmail
+}
+
+# Response Types
+type AvatarUploadResponse {
+  uploadUrl: AWSURL!
+  downloadUrl: AWSURL!
+  expiresIn: Int!
+}
+
+type User {
+  id: ID!
+  email: AWSEmail!
+  name: String!
+  avatar: String
+  emailVerified: Boolean!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  lastLoginAt: AWSDateTime
+}
