@@ -1,15 +1,15 @@
 <!--
 Sync Impact Report:
-Version change: 1.0.0 → 1.1.0
-Modified principles: Enhanced AWS Amplify Gen 2 coverage
-Added sections: Enhanced backend configuration, storage, functions, environment management, observability
+Version change: 1.1.0 → 1.2.0
+Modified principles: Added MANDATORY Amplify subagent usage requirements
+Added sections: Mandatory subagent usage for all Amplify Gen 2 planning, tasks, verification, and implementation
 Removed sections: N/A
 Templates requiring updates:
-  ⚠️ .specify/templates/plan-template.md - may need storage/functions complexity categories
-  ⚠️ .specify/templates/spec-template.md - may need storage/functions requirement sections
-  ⚠️ .specify/templates/tasks-template.md - may need backend configuration task categories
+  ✅ .specify/templates/plan-template.md - updated with subagent requirements
+  ✅ .specify/templates/spec-template.md - aligned with requirements
+  ✅ .specify/templates/tasks-template.md - aligned with requirements
   ✅ .claude/commands/*.md - verified agent-specific references
-Follow-up TODOs: Review templates for alignment with enhanced Amplify Gen 2 requirements
+Follow-up TODOs: All teams must use amplify-fullstack-specialist subagent for Amplify work
 -->
 
 # MicroSaaS Constitution
@@ -18,6 +18,13 @@ Follow-up TODOs: Review templates for alignment with enhanced Amplify Gen 2 requ
 
 ### I. AWS Amplify Gen 2 First
 Every backend feature MUST leverage AWS Amplify Gen 2 capabilities. Use Amplify's TypeScript-first approach for backend configuration in `amplify/backend.ts` with proper resource definitions. Follow CLAUDE.md Amplify rules precisely - external providers naming conventions, proper authentication configuration, and GraphQL schema patterns. Implement proper resource relationships, authorization rules, and environment-specific configurations. Custom backends only when Amplify capabilities are insufficient.
+
+**MANDATORY: Amplify Subagent Usage**
+- ALL planning activities involving Amplify Gen 2 MUST use the amplify-fullstack-specialist subagent
+- ALL task generation for Amplify features MUST use the amplify-fullstack-specialist subagent
+- ALL verification and validation of Amplify implementations MUST use the amplify-fullstack-specialist subagent
+- ALL implementation work on Amplify backend, data, auth, storage, or functions MUST use the amplify-fullstack-specialist subagent
+- Direct implementation without the Amplify subagent is prohibited for any AWS Amplify Gen 2 components
 
 ### II. Component Library Consistency
 All UI components MUST use ShadcnUI as the foundation. Customize existing ShadcnUI components rather than creating from scratch. Follow the established component patterns in `components/ui/` and maintain visual consistency across the application. Use the `cn()` utility for conditional styling.
@@ -153,6 +160,11 @@ Changes to core technologies (Amplify Gen 2, Next.js, ShadcnUI, Zustand, Zod, St
 ### Development Workflow
 - Follow TDD principles: tests written first, then implementation
 - Use the /plan → /tasks → implementation workflow
+- **MANDATORY**: Use amplify-fullstack-specialist subagent for ALL Amplify Gen 2 activities:
+  - Planning: Backend architecture, data schemas, authentication setup
+  - Tasks: Task generation for backend, data, auth, storage, functions
+  - Implementation: All Amplify backend.ts, resource configuration, deployment
+  - Verification: Validation of Amplify configurations and deployments
 - Maintain the agent-specific guidance in CLAUDE.md
 - Regular constitution compliance reviews during code reviews
 
@@ -164,4 +176,4 @@ Constitution amendments require:
 4. Version increment following semantic versioning
 5. Update of dependent template files and documentation
 
-**Version**: 1.1.0 | **Ratified**: 2025-01-25 | **Last Amended**: 2025-09-25
+**Version**: 1.2.0 | **Ratified**: 2025-01-25 | **Last Amended**: 2025-01-25
